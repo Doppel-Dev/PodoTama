@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PodoTama.Application.Interfaces;
+using PodoTama.Application.UseCases;
 using PodoTama.Infraestructure.Persistence;
 using PodoTama.Infraestructure.Repositories;
 
@@ -11,6 +12,16 @@ builder.Services.AddDbContext<PodoTamaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+builder.Services.AddScoped<GetPacientesQuery>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazor",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,6 +41,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCors("AllowBlazor");
 app.MapControllers();
 
 app.Run();

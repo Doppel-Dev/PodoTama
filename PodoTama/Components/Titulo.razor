@@ -1,0 +1,72 @@
+﻿
+<h@Level class="@CssClass" style="@Style">
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        @Text
+    }
+</h@Level>
+
+@code {
+
+    [Parameter]
+    public int Level { get; set; } = 1;
+
+
+    [Parameter]
+    public string? Text { get; set; }
+
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+
+    [Parameter]
+    public string CssClass { get; set; } = string.Empty;
+
+
+    [Parameter]
+    public string Style { get; set; } = string.Empty;
+}
+
+
+<style>
+    /* Archivo: titles.css */
+
+    /* Título principal */
+    .title-primary {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    /* Subtítulo */
+    .title-secondary {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Título destacado */
+    .title-highlight {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #e74c3c;
+        text-transform: uppercase;
+    }
+
+    /* Título centrado */
+    .title-center {
+        text-align: center;
+    }
+
+    .title-shadow {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+</style>

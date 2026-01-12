@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PodoTama.Application.Interfaces;
+using PodoTama.Application.UseCases;
 using PodoTama.Domain.Entities;
 using PodoTama.Infraestructure.Persistence;
 
@@ -11,10 +12,11 @@ namespace PodoTama.Api.Controllers
     public class PacientesController : ControllerBase
     {
         private readonly IPacienteRepository _repo;
-
-        public PacientesController(IPacienteRepository repo)
+        private readonly GetPacientesQuery _getPacientes;
+        public PacientesController(IPacienteRepository repo ,GetPacientesQuery getPacientes)
         {
             _repo = repo;
+            _getPacientes = getPacientes;
         }
 
         // GET: api/pacientes

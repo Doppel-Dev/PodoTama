@@ -1,0 +1,44 @@
+﻿@page "/pacientes"
+@using PodoTama.Application.DTOs
+@using PodoTama.UI.Components
+@using PodoTama.UI.Models
+@using PodoTama.UI.Services
+@inject PacienteService PacienteService
+
+<Titulo Level="1"/>
+
+<Tables TItem="PacienteDTO" Items="Pacientes2" Columns="Columnas" />
+
+@code {
+    private List<PacienteDTO> Pacientes2 = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Pacientes2 = await PacienteService.GetAllAsync();
+    }
+
+
+    private List<TableModel<PacienteDTO>> Columnas = new()
+    {
+        new()
+        {
+            Title = "Nombre",
+            Template = p => @<strong>@p.Nombre</strong>
+        },
+        new()
+        {
+            Title = "Edad",
+            Template = p => @<span>@p.Edad</span>
+        },
+        new()
+        {
+            Title = "Dirección",
+            Template = p => @<span>@p.Direccion</span>
+        },
+        new()
+        {
+            Title = "Acciones",
+            Template = p => @<button class="btn btn-primary btn-sm">Ver Detalles</button>
+        }
+    };
+}   
