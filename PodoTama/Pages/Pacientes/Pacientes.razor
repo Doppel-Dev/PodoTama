@@ -17,8 +17,6 @@
     protected override async Task OnInitializedAsync()
     {
         Pacientes2 = await PacienteService.GetAllAsync();
-
-
     }
 
     private List<TableModel<PacienteDTO>> Columnas = new()

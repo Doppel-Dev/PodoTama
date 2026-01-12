@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using PodoTama;
 using PodoTama.UI;
 using PodoTama.UI.Services;
@@ -12,6 +13,8 @@ builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7110/")
 });
+
+builder.Services.AddMudServices();
 
 builder.Services.AddScoped<PacienteService>();
 

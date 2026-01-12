@@ -1,0 +1,53 @@
+﻿@page "/dashboard"
+
+@using MudBlazor
+
+<h2>Dashboard</h2>
+
+<!-- Gráfico de barras con MudBlazor -->
+<MudChart ChartType="ChartType.Bar"
+          ChartSeries="@Series"
+          XAxisLabels="@XAxisLabels"
+          Width="100%"
+          Height="350px" />
+
+<br />
+<!-- Tarjetas de métricas -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <MudPaper Class="pa-4 d-flex flex-column align-center">
+            <MudText Typo="Typo.h5">Ganancias</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Success">@Ganancias.ToString("C")</MudText>
+        </MudPaper>
+    </div>
+
+    <div class="col-md-6">
+        <MudPaper Class="pa-4 d-flex flex-column align-center">
+            <MudText Typo="Typo.h5">Atenciones</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Info">@TotalAtenciones</MudText>
+        </MudPaper>
+    </div>
+</div>
+
+@code {
+    private decimal Ganancias;
+    private int TotalAtenciones;
+
+    // 🔹 Series de datos para el gráfico
+    private List<ChartSeries> Series = new()
+    {
+        new ChartSeries() { Name = "Ganancias", Data = new double[] { 120000, 95000, 110000, 130000 } },
+        new ChartSeries() { Name = "Atenciones", Data = new double[] { 40, 35, 50, 42 } }
+    };
+
+    // 🔹 Etiquetas del eje X
+    private string[] XAxisLabels = { "Enero", "Febrero", "Marzo", "Abril" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Datos dummy simulados
+        await Task.Delay(500);
+        Ganancias = 125000;   // Ejemplo: $125.000 CLP
+        TotalAtenciones = 42; // Ejemplo: 42 atenciones
+    }
+}
