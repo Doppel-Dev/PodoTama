@@ -1,0 +1,58 @@
+﻿@page "/pacientes/editar/{IdPaciente:int}"
+@using PodoTama.Application.DTOs
+@using PodoTama.UI.Services
+@inject PacienteService PacienteService
+@inject NavigationManager NavigationManager
+
+<h3>Editar Paciente</h3>
+
+@if (paciente == null)
+{
+    <p>Cargando datos...</p>
+}
+else
+{
+    <EditForm Model="paciente" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label>Nombre:</label>
+            <InputText class="form-control" @bind-Value="paciente.Nombre" />
+        </div>
+
+        <div class="mb-3">
+            <label>Edad:</label>
+            <InputNumber class="form-control" @bind-Value="paciente.Edad" />
+        </div>
+
+        <div class="mb-3">
+            <label>Dirección:</label>
+            <InputText class="form-control" @bind-Value="paciente.Direccion" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="Volver">Cancelar</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int IdPaciente { get; set; }
+    private PacienteDTO paciente;
+
+    protected override async Task OnInitializedAsync()
+    {
+        paciente = await PacienteService.GetByIdAsync(IdPaciente);
+    }
+
+    private async Task Guardar()
+    {
+        await PacienteService.UpdateAsync(paciente);
+        NavigationManager.NavigateTo("/pacientes");
+    }
+
+    private void Volver()
+    {
+        NavigationManager.NavigateTo("/pacientes");
+    }
+}

@@ -4,6 +4,8 @@
 @using PodoTama.UI.Models
 @using PodoTama.UI.Services
 @inject PacienteService PacienteService
+@inject NavigationManager NavigationManager
+
 
 <Titulo Level="1"/>
 
@@ -15,8 +17,9 @@
     protected override async Task OnInitializedAsync()
     {
         Pacientes2 = await PacienteService.GetAllAsync();
-    }
 
+
+    }
 
     private List<TableModel<PacienteDTO>> Columnas = new()
     {
@@ -38,7 +41,20 @@
         new()
         {
             Title = "Acciones",
-            Template = p => @<button class="btn btn-primary btn-sm">Ver Detalles</button>
+            Template = p => @<div>
+            <a class="btn btn-info btn-sm me-1" title="Editar"
+               href="@($"/pacientes/editar/{p.IdPaciente}")">
+                <i class="bi bi-pencil"></i>
+            </a>
+
+            <a class="btn btn-primary btn-sm" title="Ver detalles"
+               href="@($"/pacientes/detalles/{p.IdPaciente}")">
+                <i class="bi bi-eye"></i>
+            </a>
+        </div>
         }
+
+
+
     };
 }   

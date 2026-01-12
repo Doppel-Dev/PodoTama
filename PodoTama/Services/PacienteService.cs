@@ -16,4 +16,15 @@ public class PacienteService
         return await _http.GetFromJsonAsync<List<PacienteDTO>>("api/Pacientes/")
                ?? new List<PacienteDTO>();
     }
+
+    public async Task<PacienteDTO?> GetByIdAsync(int id)
+    {
+        return await _http.GetFromJsonAsync<PacienteDTO>($"api/Pacientes/{id}");
+    }
+    public async Task<bool> UpdateAsync(PacienteDTO paciente)
+    {
+        var response = await _http.PutAsJsonAsync($"api/Pacientes/{paciente.IdPaciente}", paciente);
+        return response.IsSuccessStatusCode;
+    }
+
 }
