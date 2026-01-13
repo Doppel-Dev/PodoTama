@@ -27,4 +27,16 @@ public class PacienteService
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<bool> CreateAsync(PacienteDTO paciente)
+    {
+        var response = await _http.PostAsJsonAsync("api/Pacientes/", paciente);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var response = await _http.DeleteAsync($"api/Pacientes/{id}");
+        return response.IsSuccessStatusCode;
+    }
+
 }

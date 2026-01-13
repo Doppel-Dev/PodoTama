@@ -1,0 +1,50 @@
+﻿@page "/pacientes/crear"
+@using PodoTama.Application.DTOs
+@using PodoTama.UI.Components
+@using PodoTama.UI.Services
+@inject PacienteService PacienteService
+@inject NavigationManager NavigationManager
+
+<Titulo Level="1">Crear Paciente</Titulo>
+
+<EditForm Model="nuevoPaciente" OnValidSubmit="GuardarPaciente">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <InputText id="nombre" class="form-control" @bind-Value="nuevoPaciente.Nombre" />
+    </div>
+
+    <div class="mb-3">
+        <label for="edad" class="form-label">Edad</label>
+        <InputNumber id="edad" class="form-control" @bind-Value="nuevoPaciente.Edad" />
+    </div>
+
+    <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <InputText id="direccion" class="form-control" @bind-Value="nuevoPaciente.Direccion" />
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        <i class="bi bi-save"></i> Guardar
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" @onclick="Cancelar">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </button>
+</EditForm>
+
+@code {
+    private PacienteDTO nuevoPaciente = new();
+
+    private async Task GuardarPaciente()
+    {
+        await PacienteService.CreateAsync(nuevoPaciente);
+        NavigationManager.NavigateTo("/pacientes");
+    }
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/pacientes");
+    }
+}

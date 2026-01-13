@@ -1,3 +1,4 @@
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -15,7 +16,7 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 
 builder.Services.AddMudServices();
-
+builder.Services.AddSweetAlert2();
 builder.Services.AddScoped<PacienteService>();
 
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });

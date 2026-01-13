@@ -5,11 +5,20 @@
 @using PodoTama.UI.Services
 @inject PacienteService PacienteService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 
-<Titulo Level="1"/>
+<Titulo Text="Pacientes" Level="1" Center="true" FontSize="42px" Color="black" CssClass="title-center title-shadow" />
 
-<Tables TItem="PacienteDTO" Items="Pacientes2" Columns="Columnas" />
+<div class="mb-3" style="padding: 5px">
+    <button class="btn btn-success" @onclick="AgregarPaciente">
+        <i class="bi bi-person-plus"></i> Agregar Paciente
+    </button>
+</div>
+
+<div style="padding: 5px">
+    <Tables TItem="PacienteDTO" Items="Pacientes2" Columns="GetColumnas()"  />
+</div>
 
 @code {
     private List<PacienteDTO> Pacientes2 = new();
@@ -19,40 +28,90 @@
         Pacientes2 = await PacienteService.GetAllAsync();
     }
 
-    private List<TableModel<PacienteDTO>> Columnas = new()
+    private void AgregarPaciente()
     {
-        new()
-        {
-            Title = "Nombre",
-            Template = p => @<strong>@p.Nombre</strong>
-        },
-        new()
-        {
-            Title = "Edad",
-            Template = p => @<span>@p.Edad</span>
-        },
-        new()
-        {
-            Title = "Dirección",
-            Template = p => @<span>@p.Direccion</span>
-        },
-        new()
-        {
-            Title = "Acciones",
-            Template = p => @<div>
-            <a class="btn btn-info btn-sm me-1" title="Editar"
-               href="@($"/pacientes/editar/{p.IdPaciente}")">
-                <i class="bi bi-pencil"></i>
-            </a>
+        NavigationManager.NavigateTo("/pacientes/crear");
+    }
 
-            <a class="btn btn-primary btn-sm" title="Ver detalles"
-               href="@($"/pacientes/detalles/{p.IdPaciente}")">
-                <i class="bi bi-eye"></i>
-            </a>
-        </div>
+            private List<TableModel<PacienteDTO>> GetColumnas()
+            {
+                return new()
+            {
+                new() { Title = "Nombre", Template = p => @<strong>@p.Nombre</strong> },
+                new() { Title = "Edad", Template = p => @<span>@p.Edad</span> },
+                new() { Title = "Dirección", Template = p => @<span>@p.Direccion</span> },
+                new()
+                {
+                    Title = "Acciones",
+                    Template = p => @<div>
+                        <a class="btn btn-primary btn-sm me-1" href="@($"/pacientes/detalles/{p.IdPaciente}")">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a class="btn btn-info btn-sm me-1" href="@($"/pacientes/editar/{p.IdPaciente}")">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(p.IdPaciente)">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                }
+            };
         }
 
 
+private async Task ConfirmarEliminar(int id)
+    {
+        var result = await JS.InvokeAsync<object>("Swal.fire", new
+        {
+            title = "¿Estás seguro?",
+            text = "Esta acción eliminará al paciente de forma permanente.",
+            icon = "warning",
+            showCancelButton = true,
+            confirmButtonColor = "#d33",
+            cancelButtonColor = "#3085d6",
+            confirmButtonText = "Sí, eliminar",
+            cancelButtonText = "Cancelar"
+        });
 
-    };
+        var json = (System.Text.Json.JsonElement)result;
+        bool confirmado = json.GetProperty("isConfirmed").GetBoolean();
+
+        if (confirmado)
+        {
+            var ok = await PacienteService.DeleteAsync(id);
+            if (ok)
+            {
+                Pacientes2 = await PacienteService.GetAllAsync();
+                StateHasChanged();
+
+                await JS.InvokeVoidAsync("Swal.fire", new
+                {
+                    title = "Eliminado",
+                    text = "El paciente fue eliminado correctamente.",
+                    icon = "success"
+                });
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("Swal.fire", new
+                {
+                    title = "Error",
+                    text = "No se pudo eliminar el paciente.",
+                    icon = "error"
+                });
+            }
+        }
+    }
+
+
 }   
+
+<style>
+    .title-center {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+</style>
