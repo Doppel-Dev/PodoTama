@@ -12,6 +12,7 @@ builder.Services.AddDbContext<PodoTamaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+builder.Services.AddScoped<IProfesionalRepository, ProfesionalRepository>();
 builder.Services.AddScoped<GetPacientesQuery>();
 
 builder.Services.AddCors(options =>

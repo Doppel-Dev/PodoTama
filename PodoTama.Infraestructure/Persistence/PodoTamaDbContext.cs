@@ -15,6 +15,7 @@ namespace PodoTama.Infraestructure.Persistence
             
         }
         public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<Profesional> Profesionales { get; set; }
         //public DbSet<Cita> Citas { get; set; }
         //public DbSet<Podologo> Podologos { get; set; }
 
@@ -29,6 +30,22 @@ namespace PodoTama.Infraestructure.Persistence
                       .IsRequired()
                       .HasMaxLength(100);
             });
+            modelBuilder.Entity<Profesional>(entity =>
+            {
+                entity.HasKey(p => p.IdProfesional);
+                entity.Property(p => p.Nombre)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(p => p.Especialidad)
+                      .HasMaxLength(100);
+
+                // Ejemplo: relación con citas si la agregas después
+                // entity.HasMany(p => p.Citas)
+                //       .WithOne(c => c.Profesional)
+                //       .HasForeignKey(c => c.IdProfesional);
+            });
+
         }
 
 

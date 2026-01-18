@@ -18,6 +18,6 @@ builder.Services.AddScoped(sp => new HttpClient
 builder.Services.AddMudServices();
 builder.Services.AddSweetAlert2();
 builder.Services.AddScoped<PacienteService>();
-
+builder.Services.AddScoped<ProfesionalService>();
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 await builder.Build().RunAsync();

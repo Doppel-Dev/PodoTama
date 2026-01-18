@@ -9,11 +9,11 @@ namespace PodoTama.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PacientesController : ControllerBase
+    public class PacienteController : ControllerBase
     {
         private readonly IPacienteRepository _repo;
         private readonly GetPacientesQuery _getPacientes;
-        public PacientesController(IPacienteRepository repo ,GetPacientesQuery getPacientes)
+        public PacienteController(IPacienteRepository repo ,GetPacientesQuery getPacientes)
         {
             _repo = repo;
             _getPacientes = getPacientes;
