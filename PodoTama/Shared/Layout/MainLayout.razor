@@ -1,12 +1,56 @@
 ﻿@using PodoTama.UI.Components
 @inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar ">
+
+<div class="layout">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
         <SiderbarV2 />
-    </div>
-    <main>
-        <article class="content px-4">
+    </aside>
+
+    <!-- zona derecha -->
+    <div class="main-area">
+
+        <main class="content px-4 pt-3">
             @Body
-        </article>
-    </main>
+        </main>
+
+        <footer>
+            <Footer />
+        </footer>
+
+    </div>
+
 </div>
+
+<style>
+    .layout {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* sidebar vertical */
+    .sidebar {
+        width: 260px;
+        background: #1e293b;
+    }
+
+    /* contenido + footer en columna */
+    .main-area {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    /* contenido crece */
+    .content {
+        flex: 1;
+    }
+
+    /* footer abajo */
+    .footer {
+        border-top: 1px solid #e5e7eb;
+        padding: 1rem;
+        background: #fff;
+    }
+</style>

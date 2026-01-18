@@ -1,0 +1,124 @@
+﻿<footer class="bg-light border-top py-3 mt-auto">
+    <div class="container">
+        <div class="row align-items-center text-center text-md-start">
+
+            <!-- Columna izquierda -->
+            <div class="col-12 col-md-6 mb-3 mb-md-0">
+                <h5 class="text-primary">Contacto</h5>
+                <p class="mb-0">
+                    ¿Tienes dudas o necesitas ayuda? Escríbenos por WhatsApp o síguenos en redes sociales.
+                </p>
+            </div>
+
+            <!-- Columna derecha -->
+            <div class="col-12 col-md-6 text-md-end">
+                <a href="https://wa.me/56933001772?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20en%20PodoZen.%20%C2%BFTienen%20disponibilidad%3F"
+                   target="_blank" class="text-success text-decoration-none fs-5 me-3">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/podo.tamara/"
+                   target="_blank" class="text-danger text-decoration-none fs-5 me-3">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/"
+                   target="_blank" class="text-primary text-decoration-none fs-5">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            </div>
+
+            <!-- Línea inferior -->
+            <div class="col-12 mt-3 text-center">
+                © @DateTime.Now.Year PodoZen. Todos los derechos reservados.
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<a href="https://wa.me/56940555937?text=Hola%20Me%20gustaría%20agendar%2C%20sigue%20disponible%3F" class="whatsapp-button" target="_blank" rel="noopener" aria-label="Contáctanos por WhatsApp">
+    <div class="whatsapp-icon">
+        <i class="bi bi-whatsapp"></i>
+    </div>
+    <span class="whatsapp-text">Háblanos al WhatsApp!</span>
+</a>
+
+@code {
+
+}
+<style>
+    .link-animado {
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+        .link-animado::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .link-animado:hover {
+            color: #f8f9fa;
+        }
+
+            .link-animado:hover::after {
+                width: 100%;
+            }
+
+
+
+    /* Botón flotante de Wspp */
+    .whatsapp-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25D366;
+        border-radius: 30px;
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        z-index: 1000;
+        overflow: hidden;
+        transition: width 0.4s ease;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .whatsapp-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+        .whatsapp-icon i {
+            font-size: 32px;
+            color: white;
+        }
+
+    .whatsapp-text {
+        color: white;
+        font-weight: bold;
+        opacity: 0;
+        padding-right: 20px;
+        transition: opacity 0.3s ease;
+        text-decoration: none;
+    }
+
+    .whatsapp-button:hover {
+        width: 240px;
+    }
+
+        .whatsapp-button:hover .whatsapp-text {
+            opacity: 1;
+        }
+</style>

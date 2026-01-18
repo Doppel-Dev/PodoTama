@@ -1,0 +1,46 @@
+﻿@page "/pacientes/detalles/{IdPaciente:int}"
+@using PodoTama.Application.DTOs
+@using PodoTama.UI.Components
+@using PodoTama.UI.Services
+@inject PacienteService PacienteService
+@inject NavigationManager NavigationManager
+
+
+<Titulo Level="1">Detalles del Paciente</Titulo>
+
+@if (paciente == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@paciente.Nombre</h5>
+            <p class="card-text"><strong>Edad:</strong> @paciente.Edad</p>
+            <p class="card-text"><strong>Teléfono:</strong> @paciente.Telefono</p>
+            <p class="card-text"><strong>Dirección:</strong> @paciente.Direccion</p>
+            <p class="card-text"><strong>Observaciones:</strong> @paciente.Observaciones</p>
+        </div>
+    </div>
+
+    <button class="btn btn-secondary mt-3" @onclick="Volver">
+        <i class="bi bi-arrow-left"></i> Volver
+    </button>
+}
+
+
+@code {
+    [Parameter] public int IdPaciente { get; set; }
+    private PacienteDTO? paciente;
+    protected override async Task OnInitializedAsync()
+    {
+        paciente = await PacienteService.GetByIdAsync(IdPaciente);
+    }
+
+    private void Volver()
+    {
+        NavigationManager.NavigateTo("/pacientes");
+    }
+
+}
